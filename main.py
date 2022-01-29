@@ -50,7 +50,7 @@ class ScrapeOkCupidApp:
     def close_app_offers_windows(self):
         pass
 
-    def send_messages_logic(self, number_of_users_to_contact=TEN_USERS, message=DEFAULT_LINES):
+    def send_messages_logic(self, number_of_users_to_contact: int = TEN_USERS, message: list = DEFAULT_LINES):
         for _ in range(number_of_users_to_contact):
             try:
                 self._choose_user_from_queue()
@@ -121,7 +121,7 @@ class ScrapeOkCupidApp:
             '/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[1]/div')
         delete_liked_user.click()
 
-    def _write_line(self, message):
+    def _write_line(self, message: str):
         #  Write an opening line to start the chat
         introduce_yourself = self.driver.find_element_by_class_name('messenger-composer')
         introduce_yourself.send_keys(random.choice(message))
