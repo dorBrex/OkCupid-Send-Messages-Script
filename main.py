@@ -109,7 +109,11 @@ class ScrapeOkCupidApp:
         self.driver.implicitly_wait(THREE_SECONDS)
 
     def _is_inbox_full(self):
-        inbox_is_full = self.driver.find_element_by_class_name('messenger-banner')
+        try:
+            inbox_is_full = self.driver.find_element_by_class_name('messenger-composer')
+        except Exception as e:
+            print(e)
+            inbox_is_full = self.driver.find_element_by_class_name('messenger-banner')
         if "has a full inbox" in inbox_is_full.text:
             users_name = self.driver.find_element_by_class_name('profile-basics-username-text')
             print(f"{users_name.text}'s inbox is full, you cannot send her/him any more messages.")
@@ -142,7 +146,7 @@ def main():
     run_script.login()
     run_script.navigate_to_liked_users_webpage()
     run_script.close_cookies_tracking_permission_window()
-    run_script.send_messages_logic(number_of_users_to_contact=FORTY_USERS, message=OPENING_LINES)
+    run_script.send_messages_logic(number_of_users_to_contact=200, message=OPENING_LINES)
 
 
 if __name__ == '__main__':
