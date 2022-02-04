@@ -3,15 +3,26 @@ import time
 from urllib import request
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-from personal_info import username, passwd, DEFAULT_LINES, OPENING_LINES
-from utils import FORTY_USERS, TEN_USERS, THREE_SECONDS, FIVE_SECONDS, TEN_SECONDS, TWENTY_SECONDS, LOGIN_PAGE, \
+from personal_info import username, passwd, DEFAULT_LINES, OPENING_LINES, CACHE_FOLDER
+from utils import TEN_USERS, THREE_SECONDS, FIVE_SECONDS, TEN_SECONDS, TWENTY_SECONDS, LOGIN_PAGE, \
     WHO_YOU_LIKED_PAGE
 
 
 class ScrapeOkCupidApp:
     def __init__(self):
-        self.driver = webdriver.Chrome()
+
+        options = Options()
+        # "--user-data-dir=C:\\Users\\user_name\\Desktop\\UserData" - an empty folder to be used for caching the login
+        #  takes about 100 mb of storage
+        options.add_argument(CACHE_FOLDER)
+        options.add_argument("--start-maximized")
+        options.page_load_strategy = 'normal'
+        self.driver = webdriver.Chrome(options=options)
+
+    def _open_default_chrome(self):
+        pass
 
     def open_application(self):
         # Requests the specific site
@@ -39,12 +50,16 @@ class ScrapeOkCupidApp:
     def navigate_to_liked_users_webpage(self):
         self.driver.get(WHO_YOU_LIKED_PAGE)
         time.sleep(FIVE_SECONDS)
+        # self.driver.fullscreen_window()
 
     def close_cookies_tracking_permission_window(self):
-        personalize_my_choices = self.driver.find_element_by_id('onetrust-pc-btn-handler')
-        personalize_my_choices.click()
-        reject_all = self.driver.find_element_by_class_name('ot-pc-refuse-all-handler')
-        reject_all.click()
+        try:
+            personalize_my_choices = self.driver.find_element_by_id('onetrust-pc-btn-handler')
+            personalize_my_choices.click()
+            reject_all = self.driver.find_element_by_class_name('ot-pc-refuse-all-handler')
+            reject_all.click()
+        except Exception as e:
+            print(e, "\nAlready closed the cookies tab once before")
 
     # TODO: Create the relevant function to handle this kind of pop-ups windows
     def close_app_offers_windows(self):
@@ -109,7 +124,11 @@ class ScrapeOkCupidApp:
         self.driver.implicitly_wait(THREE_SECONDS)
 
     def _is_inbox_full(self):
-        inbox_is_full = self.driver.find_element_by_class_name('messenger-banner')
+        try:
+            inbox_is_full = self.driver.find_element_by_class_name('messenger-composer')
+        except Exception as e:
+            print(e)
+            inbox_is_full = self.driver.find_element_by_class_name('messenger-banner')
         if "has a full inbox" in inbox_is_full.text:
             users_name = self.driver.find_element_by_class_name('profile-basics-username-text')
             print(f"{users_name.text}'s inbox is full, you cannot send her/him any more messages.")
@@ -121,7 +140,7 @@ class ScrapeOkCupidApp:
             '/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[1]/div')
         delete_liked_user.click()
 
-    def _write_line(self, message: str):
+    def _write_line(self, message: list[str]):
         #  Write an opening line to start the chat
         introduce_yourself = self.driver.find_element_by_class_name('messenger-composer')
         introduce_yourself.send_keys(random.choice(message))
@@ -135,14 +154,21 @@ class ScrapeOkCupidApp:
     def _exception_handling(self):
         self.driver.get('https://www.okcupid.com/who-you-like?cf=likesIncoming')
 
+    def logged_in(self):
+        if self.driver.find_element_by_class_name('profile-button-details'):
+            print("You are already logged in")
+            return True
+
 
 def main():
     run_script = ScrapeOkCupidApp()
     run_script.open_application()
-    run_script.login()
+    time.sleep(3)
+    if not run_script.logged_in():
+        run_script.login()
     run_script.navigate_to_liked_users_webpage()
     run_script.close_cookies_tracking_permission_window()
-    run_script.send_messages_logic(number_of_users_to_contact=FORTY_USERS, message=OPENING_LINES)
+    run_script.send_messages_logic(number_of_users_to_contact=200, message=OPENING_LINES)
 
 
 if __name__ == '__main__':
