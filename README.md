@@ -15,31 +15,17 @@ The Cupid Swindler is a python writted script using Selenium to save you time an
 
 ## Features
 
-- Import a HTML file and watch it magically convert to Markdown
-- Drag and drop images (requires your Dropbox account be linked)
-- Import and save files from GitHub, Dropbox, Google Drive and One Drive
-- Drag and drop markdown and HTML files into Dillinger
-- Export documents as Markdown, HTML and PDF
+- Connects to your personal OkCupid account
+- Save your cookies and personal authentication information only on your own local-machine n the UserData folder - no one else will be able to see it. We're keeping your privacy 100% safe.
+- At the end of the script-run, generates a list with the name, location and age of each user you sent a message to.
+- Handles exceptions and errors on the UI of OkCupid site
+- Pass and delete user with full inbox.
+- Reconnecting to your user with your personal info, without sharing it, and without repeating writing it over and over.
+- print each stage and act to your terminal/ cli.
 
-Markdown is a lightweight markup language based on the formatting conventions
-that people naturally use in email.
-As [John Gruber] writes on the [Markdown site][df1]
+## Tech & Installation
 
-> The overriding design goal for Markdown's
-> formatting syntax is to make it as readable
-> as possible. The idea is that a
-> Markdown-formatted document should be
-> publishable as-is, as plain text, without
-> looking like it's been marked up with tags
-> or formatting instructions.
-
-This text you see here is *actually- written in Markdown! To get a feel
-for Markdown's syntax, type some text into the left window and
-watch the results in the right.
-
-## Tech
-
-Dillinger uses a number of open source projects to work properly:
+The Cupid Swindler uses a number of open source projects to work properly:
 
 - [Python] - Python 3.4+ to run the script on your computer
 - [Pycharm] - Free IDE - text editor and developers environment in order to edit the script.
@@ -51,14 +37,9 @@ Dillinger uses a number of open source projects to work properly:
 And of course CupidSwindler itself is open source with a [public repository][CupidSwindler]
  on GitHub.
 
-## Installation
-
-The Cupid Swindler requires [Node.js](https://nodejs.org/) v10+ to run.
-
-
 ## Plugins
 
-The Cupid Swindler is currently extended with the following plugins.
+The Cupid Swindler is yet to be extended with the following plugins, but it's in progress.
 Instructions on how to use them in your own application are linked below.
 
 | Plugin | README |
@@ -67,7 +48,6 @@ Instructions on how to use them in your own application are linked below.
 | GitHub |  |
 | Google Drive |  |
 | OneDrive |  |
-| Medium |  |
 | Google Analytics |  |
 
 ## Development
@@ -97,10 +77,22 @@ git checkout staging / git checkout -b <new branch>
 add your functions and features
 ```
 
-make sure your working on staging branch or exanding and adding new branches for specific features:
+Make sure your working on staging branch or exanding and adding new branches for specific features:
 
 ```sh
-git add -> commit -> push
+git add <files>
+```
+
+```sh
+git commit -m <message clarifying what you have added and changed>
+```
+
+```sh
+git push origin <name of the branch>
+```
+
+```sh
+Get into github and open a merge rwquest to staging/master
 ```
 
 And we'll make sure to go over it, code review and push it to the master branch and of course mention you in the contributers :) 
