@@ -44,33 +44,21 @@ Dillinger uses a number of open source projects to work properly:
 - [Python] - Python 3.4+ to run the script on your computer
 - [Pycharm] - Free IDE - text editor and developers environment in order to edit the script.
 - [Git Bash] - A program to clone the repo from github to your local machine.
+- [Chrome Web Driver] - Download it from the original site and make sure to put it in the same folder as the rest of the repo (project) otherwise the script won't run.
+- Create an empty UserData folder on your desktop
 
 
-And of course CupidSwindler itself is open source with a [public repository][dill]
+And of course CupidSwindler itself is open source with a [public repository][CupidSwindler]
  on GitHub.
 
 ## Installation
 
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
+The Cupid Swindler requires [Node.js](https://nodejs.org/) v10+ to run.
 
-Install the dependencies and devDependencies and start the server.
-
-```sh
-cd dillinger
-npm i
-node app
-```
-
-For production environments...
-
-```sh
-npm install --production
-NODE_ENV=production node app
-```
 
 ## Plugins
 
-Dillinger is currently extended with the following plugins.
+The Cupid Swindler is currently extended with the following plugins.
 Instructions on how to use them in your own application are linked below.
 
 | Plugin | README |
@@ -86,42 +74,38 @@ Instructions on how to use them in your own application are linked below.
 
 Want to contribute? Great!
 
-Dillinger uses Gulp + Webpack for fast developing.
+The Cupid Swindler uses Gulp + Webpack for fast developing.
 Make a change in your file and instantaneously see your updates!
 
 Open your favorite Terminal and run these commands.
 
-First Tab:
+clone the code to your local machine:
 
 ```sh
-node app
+git clone https://github.com/dorBrex/OkCupid-Send-Messages-Script.git
 ```
 
-Second Tab:
+make sure your working on staging branch or exanding and adding new branches for specific features:
 
 ```sh
-gulp watch
+git checkout staging / git checkout -b <new branch>
 ```
 
-(optional) Third:
+[work work work work work]:
 
 ```sh
-karma test
+add your functions and features
 ```
 
-#### Building for source
-
-For production release:
+make sure your working on staging branch or exanding and adding new branches for specific features:
 
 ```sh
-gulp build --prod
+git add -> commit -> push
 ```
 
-Generating pre-built zip archives for distribution:
+And we'll make sure to go over it, code review and push it to the master branch and of course mention you in the contributers :) 
 
-```sh
-gulp build dist --prod
-```
+#### Additional info
 
 ## Docker
 To be added
@@ -138,3 +122,5 @@ IOU
    [Pycharm]: <https://www.jetbrains.com/pycharm/>
    [Git Bash]: <https://git-scm.com/downloads>
    [CupidSwindler]: <https://github.com/dorBrex/OkCupid-Send-Messages-Script>
+   [work work work work work]: <https://www.youtube.com/watch?v=HL1UzIK-flA&ab_channel=RihannaVEVO>
+  [Chrome Web Driver]: <https://chromedriver.storage.googleapis.com/index.html?path=99.0.4844.51/>
