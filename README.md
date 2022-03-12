@@ -13,6 +13,7 @@ The Cupid Swindler is a python writted script using Selenium to save you time an
 - Saving time
 - ✨Magical✨
 
+
 ## Features
 
 - Connects to your personal OkCupid account
@@ -21,7 +22,15 @@ The Cupid Swindler is a python writted script using Selenium to save you time an
 - Handles exceptions and errors on the UI of OkCupid site
 - Pass and delete user with full inbox.
 - Reconnecting to your user with your personal info, without sharing it, and without repeating writing it over and over.
-- print each stage and act to your terminal/ cli.
+- Printing the script's FLOW - each stage and action to your terminal/ cli screen.
+- Closing old conversation boxs which are covering the screen and interrupting the script.
+- Enables you to print the user identity parameters.
+- Enables you to take screenshots.
+- Enables you to save users profile picture - for later AI development.
+- Rejects all the cookies colleceted by OkCupid site on you - disallowing tracking permissions.
+
+## Features needs to be done:
+- Move mouse on screen every few seconds to act like a regular user - otherwise the scripts get caught and stop working properly in it's ucrrent runtime.
 
 ## Tech & Installation
 
