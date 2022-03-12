@@ -54,8 +54,9 @@ Instructions on how to use them in your own application are linked below.
 
 Want to contribute? Great!
 
-The Cupid Swindler uses Gulp + Webpack for fast developing.
-Make a change in your file and instantaneously see your updates!
+The Cupid Swindler team welcomes updates, features and new ideas - make sure to push them to the staging and sharing your thoughts with us through - dorBrex@gmail.com
+
+### Getting started with contributing:
 
 Open your favorite Terminal and run these commands.
 
