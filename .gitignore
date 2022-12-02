@@ -1,4 +1,4 @@
-personal_info.py
+utils/personal_info.py
 .idea/
 __pycache__/
-chromedriver.exe
+scrape_okcupid/chromedriver.exe

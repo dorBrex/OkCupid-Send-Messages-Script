@@ -39,8 +39,9 @@ The Cupid Swindler uses a number of open source projects to work properly:
 - [Python] - Python 3.4+ to run the script on your computer
 - [Pycharm] - Free IDE - text editor and developers environment in order to edit the script.
 - [Git Bash] - A program to clone the repo from github to your local machine.
-- [Chrome Web Driver] - Download it from the original site and make sure to put it in the same folder as the rest of the repo (project) otherwise the script won't run.
+- [Chrome Web Driver] - Download it from the original site and make sure to put it in the same folder as the rest of the repo (project) otherwise the script won't run. I'm currently using version [Chrome Web Driver Version 108]
 - Create an empty UserData folder on your desktop
+- The screen of the Chrome WebDrive must stay open wide (the whole screen) while running the script (the ide - such as pycharm could be minored into a smaller size!)
 
 
 And of course CupidSwindler itself is open source with a [public repository][CupidSwindler]
@@ -125,4 +126,5 @@ IOU
    [Git Bash]: <https://git-scm.com/downloads>
    [CupidSwindler]: <https://github.com/dorBrex/OkCupid-Send-Messages-Script>
    [work work work work work]: <https://www.youtube.com/watch?v=HL1UzIK-flA&ab_channel=RihannaVEVO>
-  [Chrome Web Driver]: <https://chromedriver.storage.googleapis.com/index.html?path=99.0.4844.51/>
+   [Chrome Web Driver]: <https://chromedriver.chromium.org/downloads>
+   [Chrome Web Driver Version 108]: <https://chromedriver.storage.googleapis.com/index.html?path=108.0.5359.71/>
