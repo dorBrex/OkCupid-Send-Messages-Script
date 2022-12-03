@@ -1,4 +1,6 @@
 utils/personal_info.py
 .idea/
 __pycache__/
-scrape_okcupid/chromedriver.exe
+main_logic/chromedriver.exe
+ToDo.txt
+profile_pictures/*

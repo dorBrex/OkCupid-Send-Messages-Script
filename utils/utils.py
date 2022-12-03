@@ -1,6 +1,8 @@
 import random
 from selenium.webdriver.common.by import By
 
+THIRTY = 30
+
 TEN_USERS = 10
 FORTY_USERS = 40
 
