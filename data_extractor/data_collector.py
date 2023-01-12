@@ -4,13 +4,26 @@ import re
 import time
 from urllib import request
 from typing import Union
+
+from data_extractor.ig_processor import process_ig_words, remove_emojis
 from utils.utils import generate_id, By, THIRTY
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from PIL import Image as Image
 
 
-class UserInfo:
+def special_women_needs(filters):
+    def find_filters(original_function):
+        def search(*args, **kwargs):
+            summary_text = list(args)[1]
+            split_text = summary_text.split()
+            res = any([True for word in split_text if word in filters])
+            return res
+        return search
+    return find_filters
+
+
+class OkCupidUser:
     def __init__(self, driver):
         self.driver = driver
         self.name = ''
@@ -22,11 +35,21 @@ class UserInfo:
         self.extracted_instagram_username = ''
         self.same_user_counter = 0
 
+    @special_women_needs(['דתייה', 'דת', 'בורא', 'אבא', 'שבת', 'דתיה', 'שומרת', 'עולם'])
+    def _find_god(self, self_summary):
+        pass
+
+    @special_women_needs(['בעלי', 'החבר', 'משחקים', 's+1', 'd+1'])
+    def _zahla_or_fakaza_detector(self, self_summary):
+        pass
+
     def collect_user_info(self):
         self.name = self.driver.find_element(by=By.CLASS_NAME, value='profile-basics-username-text').text
         self.age = self.driver.find_element(by=By.CLASS_NAME, value='profile-basics-asl-age').text
         self.location = self.driver.find_element(by=By.CLASS_NAME, value='profile-basics-asl-location').text
         self.self_summary = self.driver.find_element(by=By.CLASS_NAME, value='profile-essay-contents').text
+        if self._find_god(self.self_summary) or self._zahla_or_fakaza_detector(self.self_summary):
+            return None
 
         self.extracted_instagram_username = self._extract_instagram(self.self_summary)
 
@@ -49,28 +72,38 @@ class UserInfo:
     @staticmethod
     def _extract_instagram(about_me_text_box) -> Union[str, None]:
         text = about_me_text_box.lower()
+        text = remove_emojis(text)
+        if text.endswith("."):
+            text = text[:-1]
+
         instagram_mentions = ['ig', 'instagram']
 
         # search for certain known formats on instagram nicknames
-        # ig_with_low_shift = re.findall('\w+_+\w+', text)
-        # ig_with_dot = re.findall('\s\w+.+\w+\s', text)
-        # ig_with_digits = re.findall('\w+\d+', text)
-        # ig_at_gign = re.findall('@\w+', text)
-        # instagram_nickname = ''
-        # if ig_with_low_shift:
-        #     instagram_nickname = ig_with_low_shift[0].strip()
+        ig_with_low_shift = re.findall('\w+_+\w+', text)
+        ig_with_dot = re.findall('\s\w+.+\w+\s', text)
+        ig_with_digits = re.findall('\w+\d+', text)
+        ig_at_gign = re.findall('@\w+', text)
+        instagram_nickname = ''
+        if ig_at_gign:
+            instagram_nickname = ig_at_gign[0].strip()
+        if ig_with_low_shift:
+            instagram_nickname = ig_with_low_shift[0].strip()
         # if ig_with_dot:
         #     instagram_nickname = ig_with_dot[0].strip()
-        # if ig_with_digits:
-        #     instagram_nickname = ig_with_digits[0].strip()
-        # if instagram_nickname:
-        #     ig_index = text.find(instagram_nickname)
-        #     if ig_index != 0:
-        #         character_before_ig_string = text[ig_index-1]
-        #         if character_before_ig_string != '' and character_before_ig_string != ' ':
+        if ig_with_digits:
+            if not ig_with_digits[0].isdigit():
+                instagram_nickname = ig_with_digits[0].strip()
+        if instagram_nickname:
+            # ig_index = text.find(instagram_nickname)
+            # if ig_index != 0:
+            #     character_before_ig_string = text[ig_index-1]
+            #     if character_before_ig_string != '' and character_before_ig_string != ' ':
+            return instagram_nickname
 
         for i in instagram_mentions:
             if i in text:
+                if process_ig_words:
+                    continue
                 print("-" * THIRTY, "The user has mentioned its instagram user:")
                 possible_instagram = text.split(i)[1].split(' ')
                 if len(possible_instagram[0]) < 5:
@@ -138,3 +171,5 @@ class UserInfo:
         users_name = self.driver.find_element(by=By.CLASS_NAME, value='profile-basics-username-text')
         generated_id = generate_id()
         self.driver.save_screenshot(f"{users_name}_screenshot_{generated_id}.png")
+
+

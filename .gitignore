@@ -4,3 +4,5 @@ __pycache__/
 main_logic/chromedriver.exe
 ToDo.txt
 profile_pictures/*
+*.jpg
+*.txt

@@ -29,7 +29,7 @@ def main():
 
     # Start sending messages
     contact_user_logic = ReachOutToUser(driver)
-    contact_user_logic.send_messages(number_of_users_to_contact=50, message=OPENING_LINE)
+    contact_user_logic.send_messages(number_of_users_to_contact=30, message=OPENING_LINE)
 
 
 if __name__ == '__main__':
