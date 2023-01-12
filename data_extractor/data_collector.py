@@ -6,20 +6,23 @@ from urllib import request
 from typing import Union
 
 from data_extractor.ig_processor import process_ig_words, remove_emojis
+from utils.personal_info import FAR_FROM_MY_SIGHT, NOT_INTERESTED_FILTER
 from utils.utils import generate_id, By, THIRTY
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from PIL import Image as Image
 
 
-def special_women_needs(filters):
+def special_needs(filters):
     def find_filters(original_function):
         def search(*args, **kwargs):
             summary_text = list(args)[1]
             split_text = summary_text.split()
             res = any([True for word in split_text if word in filters])
             return res
+
         return search
+
     return find_filters
 
 
@@ -35,12 +38,12 @@ class OkCupidUser:
         self.extracted_instagram_username = ''
         self.same_user_counter = 0
 
-    @special_women_needs(['דתייה', 'דת', 'בורא', 'אבא', 'שבת', 'דתיה', 'שומרת', 'עולם'])
-    def _find_god(self, self_summary):
+    @special_needs(FAR_FROM_MY_SIGHT)
+    def _far_fetched(self, self_summary):
         pass
 
-    @special_women_needs(['בעלי', 'החבר', 'משחקים', 's+1', 'd+1'])
-    def _zahla_or_fakaza_detector(self, self_summary):
+    @special_needs(NOT_INTERESTED_FILTER)
+    def _not_my_type_words(self, self_summary):
         pass
 
     def collect_user_info(self):
@@ -48,7 +51,7 @@ class OkCupidUser:
         self.age = self.driver.find_element(by=By.CLASS_NAME, value='profile-basics-asl-age').text
         self.location = self.driver.find_element(by=By.CLASS_NAME, value='profile-basics-asl-location').text
         self.self_summary = self.driver.find_element(by=By.CLASS_NAME, value='profile-essay-contents').text
-        if self._find_god(self.self_summary) or self._zahla_or_fakaza_detector(self.self_summary):
+        if self._far_fetched(self.self_summary) or self._not_my_type_words(self.self_summary):
             return None
 
         self.extracted_instagram_username = self._extract_instagram(self.self_summary)
@@ -94,6 +97,8 @@ class OkCupidUser:
             if not ig_with_digits[0].isdigit():
                 instagram_nickname = ig_with_digits[0].strip()
         if instagram_nickname:
+            # ToDo: usually  I don't believe in leaving a comment-out code in the production, but cuz it's just for fun
+            #  - let it be. Should come back to it in the future
             # ig_index = text.find(instagram_nickname)
             # if ig_index != 0:
             #     character_before_ig_string = text[ig_index-1]
@@ -171,5 +176,3 @@ class OkCupidUser:
         users_name = self.driver.find_element(by=By.CLASS_NAME, value='profile-basics-username-text')
         generated_id = generate_id()
         self.driver.save_screenshot(f"{users_name}_screenshot_{generated_id}.png")
-
-
