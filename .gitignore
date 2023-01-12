@@ -1,4 +1,8 @@
-personal_info.py
+utils/personal_info.py
 .idea/
 __pycache__/
-chromedriver.exe
+main_logic/chromedriver.exe
+ToDo.txt
+profile_pictures/*
+*.jpg
+*.txt
